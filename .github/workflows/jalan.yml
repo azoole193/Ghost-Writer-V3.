@@ -1,0 +1,24 @@
+name: Ghost-Writer-Run
+on:
+  workflow_dispatch: # Agar kita bisa tekan tombol "START" secara manual
+
+jobs:
+  proses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil Kode dari Repo
+        uses: actions/checkout@v3
+
+      - name: Siapkan Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Software Pendukung
+        run: |
+          pip install -r requirements.txt
+
+      - name: Jalankan Robot Utama
+        env:
+          CLIENT_SECRETS_JSON: ${{ secrets.CLIENT_SECRETS_JSON }}
+        run: python main.py
